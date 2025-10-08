@@ -19,5 +19,5 @@ jobs:
             pwd
       - name: Run Pandoc
         run: |
-            docker run --rm -v "${{ github.workspace }}":/data pandoc/core:latest "ls /data"
+            docker run --rm -v "${{ github.workspace }}":/data pandoc/core:latest /data/test.md -o /data/test.pdf
             gh release create "test-release ${{ github.run_id }}" test.pdf --repo ${{ github.repository }} --title "Test Release" --notes "This is a test release with the generated PDF."
