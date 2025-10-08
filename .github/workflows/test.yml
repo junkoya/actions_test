@@ -1,0 +1,18 @@
+# This is a test workflow
+name: Test Workflow
+on: release
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Docker Container
+        run: |
+            echo "Setting up Docker Container"
+            docker pull pandoc/core:latest
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Run tests
+        run: echo "Running tests..."
+      - name: Run Pandoc
+        run: |
+            docker run --rm -v "${{ github.workspace }}":/data pandoc/core:latest pandoc --version
