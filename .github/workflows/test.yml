@@ -19,5 +19,5 @@ jobs:
             pwd
       - name: Run Pandoc
         run: |
-            docker run --rm -v "${{ github.workspace }}":/data pandoc/latex:latest /data/test.md --pdf-engine=lualatex -V documentclass=ltjsarticle -o /data/test.pdf
+            docker run --rm -v "${{ github.workspace }}":/data --user $(id -u):$(id -g) pandoc/latex:latest /data/test.md --pdf-engine=lualatex -V documentclass=ltjarticle -o /data/test.pdf
             gh release create "test-release ${{ github.run_id }}" test.pdf --repo ${{ github.repository }} --title "Test Release" --notes "This is a test release with the generated PDF."
