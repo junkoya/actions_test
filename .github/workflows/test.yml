@@ -1,6 +1,6 @@
 # This is a test workflow
 name: Test Workflow
-on: push
+on: workflow_dispatch
 jobs:
   test:
     runs-on: ubuntu-latest
