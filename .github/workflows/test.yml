@@ -12,6 +12,8 @@ jobs:
             echo "Setting up Docker Container"
             docker build . -t se_pandoc:latest
       - name: Run Pandoc
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-            docker run --rm -v "${{ github.workspace }}":/data se_pandoc:latest /data/test.md --pdf-engine=lualatex -V documentclass=ltjsarticle -o /data/test.pdf
+            docker run --rm -v "${{ github.workspace }}":/data se_pandoc:latest /data/test.md --verbose --pdf-engine=lualatex -V documentclass=ltjsarticle -o /data/test.pdf
             gh release create "test-release ${{ github.run_id }}" test.pdf --repo ${{ github.repository }} --title "Test Release" --notes "This is a test release with the generated PDF."
