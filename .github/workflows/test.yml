@@ -8,7 +8,7 @@ jobs:
       - name: Set up Docker Container
         run: |
             echo "Setting up Docker Container"
-            docker pull pandoc/core:latest
+            docker pull pandoc/latex:latest
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Run tests
@@ -19,5 +19,5 @@ jobs:
             pwd
       - name: Run Pandoc
         run: |
-            docker run --rm -v "${{ github.workspace }}":/data pandoc/core:latest /data/test.md -o /data/test.pdf
+            docker run --rm -v "${{ github.workspace }}":/data pandoc/latex:latest /data/test.md --pdf-engine=lualatex documentclass=ltjsarticle -o /data/test.pdf
             gh release create "test-release ${{ github.run_id }}" test.pdf --repo ${{ github.repository }} --title "Test Release" --notes "This is a test release with the generated PDF."
