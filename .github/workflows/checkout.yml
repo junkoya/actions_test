@@ -9,9 +9,11 @@ jobs:
           with:
             app-id: ${{ secrets.APP_ID }}
             private-key: ${{ secrets.PRIVATE_KEY }}
+            owner: junkoya
+            repositories: dsLib
+
         - uses: actions/checkout@v4
           with:
             repository: junkoya/dsLib
             token: ${{ steps.gen-token.outputs.token }}
-            persist-credentials: false
         - run: ls -la
