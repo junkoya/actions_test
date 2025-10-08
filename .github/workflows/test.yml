@@ -14,7 +14,9 @@ jobs:
       - name: Run tests
         run: echo "Running tests..."
       - name: LS
-        run: ls -la
+        run: |
+            ls -la
+            pwd
       - name: Run Pandoc
         run: |
             docker run --rm -v "${{ github.workspace }}":/data pandoc/core:latest pandoc test.md -o test.pdf
