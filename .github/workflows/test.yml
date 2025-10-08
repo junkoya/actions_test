@@ -5,19 +5,13 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
       - name: Set up Docker Container
         run: |
             echo "Setting up Docker Container"
-            docker pull pandoc/latex:latest
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Run tests
-        run: echo "Running tests..."
-      - name: LS
-        run: |
-            ls -la
-            pwd
+            docker build . -t se_pandoc:latest
       - name: Run Pandoc
         run: |
-            docker run --rm -v "${{ github.workspace }}":/data --user $(id -u):$(id -g) pandoc/latex:latest /data/test.md --pdf-engine=lualatex -V documentclass=ltjarticle -o /data/test.pdf
+            docker run --rm -v "${{ github.workspace }}":/data --user $(id -u):$(id -g) se_pandoc:latest /data/test.md --pdf-engine=lualatex -V documentclass=ltjsarticle -o /data/test.pdf
             gh release create "test-release ${{ github.run_id }}" test.pdf --repo ${{ github.repository }} --title "Test Release" --notes "This is a test release with the generated PDF."
